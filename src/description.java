@@ -23,7 +23,7 @@ public class description {
 		chromeOptions.addArguments("disable-gpu");
 		
         WebDriver driver = new ChromeDriver(chromeOptions);
-        String rootURL = "https://gifts.hamropatro.com/products/christmas-special-gifts";
+        String rootURL = "https://gifts.hamropatro.com/products/lhosar-special";
         String prodURL = "https://gifts.hamropatro.com/product/";
 		driver.get(rootURL);
 		Duration timeout = Duration.ofSeconds(50);
@@ -79,9 +79,9 @@ public class description {
 //			all_description.add(msg1);
 //		}
 		
-		FileWriter myWriter = new FileWriter("desc44");
+		FileWriter myWriter = new FileWriter("Loshar.csv");
 		all_description.forEach(descriptio -> {
-			String content = descriptio;
+			String content = descriptio.replace(",", "").replace("\n", "");
 			
 			try {
 				myWriter.append('\n' +content + '\n');
