@@ -1,4 +1,3 @@
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -15,15 +14,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 //fetches description
 
 public class description {
-
-	public static void main(String[] args) throws IOException {
+	public String rootURL;
+	
+	public description(String rootURL) {
+		this.rootURL = rootURL;
+	}
+	
+	public List<String> Get_Description() throws IOException {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--no-sandbox");
 		chromeOptions.addArguments("--headless");
 		chromeOptions.addArguments("disable-gpu");
 		
         WebDriver driver = new ChromeDriver(chromeOptions);
-        String rootURL = "https://gifts.hamropatro.com/products/lhosar-special";
+   
         String prodURL = "https://gifts.hamropatro.com/product/";
 		driver.get(rootURL);
 		Duration timeout = Duration.ofSeconds(50);
@@ -41,7 +45,6 @@ public class description {
 		{
 			WebElement E1= list.get(i);
 			String link = E1.getAttribute("href");
-//			System.out.println(link);
 			
 			if(!link.startsWith(prodURL)) {
 				continue;
@@ -61,36 +64,22 @@ public class description {
 			WebElement description = driver.findElement(By.id("desc"));
 			WebElement name = driver.findElement(By.className("productName__1bjTU"));
 			String prodname = name.getText();
-			all_description.add(prodname);
+
+			System.out.println(prodname);
 			String descriptions = description.getText();
-			if (descriptions == "")
-			{
-				System.out.println("No Description");
-				String msg = "No Description" ;
-				all_description.add(msg);
-			}
+			
+
 			System.out.println(descriptions);
 			System.out.println("*********");
 			all_description.add(descriptions);
 		});
-//		} catch (Exception e) {
-//			System.out.println("Sold Out");
-//			String msg1 = "Sold Out";
-//			all_description.add(msg1);
-//		}
 		
-		FileWriter myWriter = new FileWriter("Loshar.csv");
-		all_description.forEach(descriptio -> {
-			String content = descriptio.replace(",", "").replace("\n", "");
-			
-			try {
-				myWriter.append('\n' +content + '\n');
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-			}
-		});
-		myWriter.close();
+
 		driver.quit();
+		return all_description;
+
 	}
 
 }
+
+

@@ -1,4 +1,3 @@
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -14,17 +13,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 //fetches only links
 
-public class link {
 
-	public static void main(String[] args) throws IOException {
-		
+public class link {
+	public String rootURL;
+	
+	public link(String rootURL) {
+		this.rootURL = rootURL;
+	}
+
+	public List<String> Get_Links () throws IOException {
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--no-sandbox");
 		chromeOptions.addArguments("--headless");
 		chromeOptions.addArguments("disable-gpu");
 		
         WebDriver driver = new ChromeDriver(chromeOptions);
-        String rootURL = "https://gifts.hamropatro.com/products/health-care-package";
+        
         String prodURL = "https://gifts.hamropatro.com/product/";
 		driver.get(rootURL);
 		Duration timeout = Duration.ofSeconds(20);
@@ -53,21 +57,7 @@ public class link {
 			
 		}
 		
-		FileWriter myWriter = new FileWriter("link47.csv");
-		all_prod.forEach(links -> {
-			String content = links;
-			
-			try {
-				myWriter.append(content + '\n');
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				
-			}
-		});
-		myWriter.close();
-
-
-
+		
 		
 		for (int i = 0; i < all_prod.size(); i++)
 		{
@@ -77,6 +67,8 @@ public class link {
 		System.out.println(all_prod.size());
 		
 		driver.quit();
+		return all_prod;
+
+	}
 	}
 
-}

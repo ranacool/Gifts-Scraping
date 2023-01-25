@@ -1,4 +1,3 @@
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -13,8 +12,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class name {
-	public static void main(String[] args) throws InterruptedException, IOException {
-		// TODO Auto-generated method stub
+	public String rootURL;
+	
+	public name(String rootURL) {
+		this.rootURL = rootURL;
+	}
+
+
+	List <String> all_price = new ArrayList<String> ();
+	List <String> all_name = new ArrayList<String> ();
+	List <String> all_image = new ArrayList<String> ();
+	
+	public void Scraper() throws InterruptedException, IOException {
+
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.addArguments("--no-sandbox");
 		chromeOptions.addArguments("--headless");
@@ -22,10 +32,10 @@ public class name {
 		
         WebDriver driver = new ChromeDriver(chromeOptions);
 		
-		String rootURL = ("https://gifts.hamropatro.com/products/health-care-package");
 		driver.get(rootURL);
 		
 		System.out.println(driver.getTitle());
+		
 		Duration timeout = Duration.ofSeconds(30);
 
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
@@ -34,9 +44,6 @@ public class name {
 
 		List<WebElement> list = driver.findElements(By.className("product__2ouTw"));
 		
-		List <String> all_price = new ArrayList<String> ();
-		List <String> all_name = new ArrayList<String> ();
-		List <String> all_image = new ArrayList<String> ();
 
 		System.out.println(list.size());
 		
@@ -67,42 +74,21 @@ public class name {
 				
 
 	}
-		driver.quit();
-		
-		FileWriter myWriter = new FileWriter("info47.csv");
-		all_name.forEach(links -> {
-			String content = links;
-			
-			try {
-				myWriter.append(content + '\n');
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-			}
-		});
-		
-			all_image.forEach(link -> {
-				String contents = link;
-				
-				try {
-					myWriter.append(contents + '\n');
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					
-				}
-			});
-				all_price.forEach(price -> {
-					String contentss = price;
-					
-					try {
-						myWriter.append(contentss + '\n');
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						
-					}
-		});
-		
-		myWriter.close();
-		
+		driver.quit();	
 		
 	}
+	
+	public List<String> getAllPrice() {
+        return all_price;
+    }
+
+    public List<String> getAllImage() {
+        return all_image;
+    }
+
+    public List<String> getAllName() {
+        return all_name;
+    }
+	
 }
+
